@@ -1,12 +1,15 @@
-# Resource-Engine
-## A simple 3D C++ game engine
+# Nemark Game Engine
+## A Free and Open-Source Source like C++ game engine
 
 >[!Note]
 > THIS GAME ENGINE IS NOT FUNCTIONAL YET!
 
 Required dependencies 
  ```bash
- sudo pacman -S cmake glfw
+ //Arch linux
+ pacman -S cmake glfw
+ //FreeBSD
+ pkg install cmake glfw
  ```
 
 How to setup build?
