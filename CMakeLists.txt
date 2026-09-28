@@ -2,20 +2,20 @@ cmake_minimum_required(VERSION 3.20)
 
 cmake_policy(SET CMP0072 NEW)
 
-project(resource_engine LANGUAGES C CXX)
+project(nemark LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-set(LIB_DIR "${CMAKE_SOURCE_DIR}/dependencies/lib")
-set(INCLUDE_DIR "${CMAKE_SOURCE_DIR}/dependencies/include")
-
 set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
-set(ENGINE_DIR "${SRC_DIR}/engine")
-set(EDITOR_DIR "${SRC_DIR}/tools/editor")
-set(MAPPER_DIR "${SRC_DIR}/tools/mapper")
+set(ENGINE_DIR "${SRC_DIR}/nemark_engine")
+set(EDITOR_DIR "${SRC_DIR}/tools/nemark_editor")
+#set(MAPPER_DIR "${SRC_DIR}/tools/mapper")
+
+set(LIB_DIR "${ENGINE_DIR}/dependencies/lib")
+set(INCLUDE_DIR "${ENGINE_DIR}/dependencies/include")
 
 #------------------------
 # DEPENDENCIES
@@ -69,7 +69,7 @@ target_link_libraries(imgui PUBLIC ${OPENGL_GLFW_TARGET})
 if(EXISTS "${ENGINE_DIR}/core/glad.c")
     add_library(glad STATIC "${ENGINE_DIR}/core/glad.c")
 else()
-    message(FATAL_ERROR "Could not find glad.c in 'src/engine/core/glad.c', please make sure glad.c is located there :]")
+    message(FATAL_ERROR "Could not find glad.c in 'src/nemark_engine/core/glad.c', please make sure glad.c is located there :]")
 endif()
 
 target_include_directories(glad
@@ -85,17 +85,17 @@ file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS
     "${ENGINE_DIR}/*.cpp"
 )
 
-add_library(engine STATIC
+add_library(nemark_engine STATIC
     ${ENGINE_SOURCES}
 )
 
-target_include_directories(engine
+target_include_directories(nemark_engine
     PUBLIC
         "${SRC_DIR}"
         "${ENGINE_DIR}"
 )
 
-target_link_libraries(engine
+target_link_libraries(nemark_engine
     PUBLIC
         imgui
         glad
@@ -112,18 +112,18 @@ file(GLOB_RECURSE EDITOR_SOURCES CONFIGURE_DEPENDS
     "${EDITOR_DIR}/*.cpp"
 )
 
-add_executable(resource_editor
+add_executable(nemark_editor
     ${EDITOR_SOURCES}
 )
 
-target_include_directories(resource_editor
+target_include_directories(nemark_editor
     PRIVATE
         "${SRC_DIR}"
 )
 
-target_link_libraries(resource_editor
+target_link_libraries(nemark_editor
     PRIVATE
-        engine
+        nemark_engine
 )
 
 #--Mapper

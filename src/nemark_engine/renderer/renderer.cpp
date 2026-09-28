@@ -2,7 +2,7 @@
 
 #include<glad/glad.h>
 
-using namespace Engine;
+using namespace Nemark;
 
 void Renderer::render() { 
     

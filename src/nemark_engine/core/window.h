@@ -3,7 +3,7 @@
 #include <GLFW/glfw3.h>
 #include <string>
 
-namespace Engine {
+namespace Nemark {
     class Window final {
         public:
             void create(

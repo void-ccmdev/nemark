@@ -4,7 +4,7 @@
 #include <string>
 #include <stdexcept>
 
-using namespace Engine;
+using namespace Nemark;
 
 void Window::create(unsigned int width, unsigned int height, std::string& title)
 {

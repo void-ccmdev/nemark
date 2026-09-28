@@ -1,11 +1,10 @@
-#include "engine.h"
+#include "nemark_engine.h"
 
 #include <iostream>
 #include <string>
 #include <vector>
 
-using namespace Engine;
-
+using namespace Nemark;
 
 /////////////////////////
 /////// -OUTPUT- ////////
@@ -48,5 +47,6 @@ void InputServer::processInput(Window window) { m_inputManager.processInput(wind
 /////////////////////////
 
 void UIServer::initialize() { m_ui.initUserInterface(); }
+void UIServer::setTheme(UI_STYLE_COLORS theme) { m_ui.setStyleColors(theme); }
 void UIServer::update() { m_ui.updateUserInterface(); }
 void UIServer::destroy() { m_ui.destroyUserInterface(); }

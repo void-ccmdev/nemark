@@ -7,7 +7,7 @@
 #include "core/input.h"
 #include "ui/ui.h"
 
-namespace Engine
+namespace Nemark
 {
     class Output {
         public:
@@ -47,6 +47,7 @@ namespace Engine
     class UIServer {
         public:
             void initialize();
+            void setTheme(UI_STYLE_COLORS theme);
             void update();
             void destroy();
         private:

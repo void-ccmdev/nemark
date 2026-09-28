@@ -2,10 +2,10 @@
 
 #include <string>
 
-namespace Editor {
-    class App {
+namespace NEditorApp {
+    class Application {
         public:
-            std::string title;
             int run();
+            std::string title;
     };
 }

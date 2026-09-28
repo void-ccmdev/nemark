@@ -1,6 +1,6 @@
 #pragma once
 
-namespace Engine {
+namespace Nemark {
     class Renderer {
         public:
             void render();
