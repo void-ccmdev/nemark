@@ -27,6 +27,7 @@ void UI::setStyleColors(UI_STYLE_COLORS theme)
 {
     if (theme == UI_STYLE_COLORS::DARK) { ImGui::StyleColorsDark(); }
     else if (theme == UI_STYLE_COLORS::LIGHT) { ImGui::StyleColorsLight(); }
+    else if (theme == UI_STYLE_COLORS::CLASSIC) {ImGui::StyleColorsClassic(); }
     else { std::cout << "No ImGui theme selected -> using default theme (DARK)"; ImGui::StyleColorsDark(); }
 
     m_mainScale = ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor());
@@ -41,8 +42,7 @@ void UI::setStyleColors(UI_STYLE_COLORS theme)
     }
 }
 
-
-void UI::updateUserInterface()
+void UI::startUserInterface()
 {
     glfwPollEvents();
     if (glfwGetWindowAttrib(glfwGetCurrentContext(), GLFW_ICONIFIED) != 0)
@@ -55,11 +55,10 @@ void UI::updateUserInterface()
     ImGui::NewFrame();
 
     ImGui::DockSpaceOverViewport();
+}
 
-    //SMTH
-    bool show = true;
-    ImGui::ShowDemoWindow(&show);
-
+void UI::endUserInterface()
+{
     ImGui::Render();
 
 
