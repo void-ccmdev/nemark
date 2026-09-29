@@ -46,7 +46,10 @@ void InputServer::processInput(Window window) { m_inputManager.processInput(wind
 ///////   -UI-  /////////
 /////////////////////////
 
-void UIServer::initialize() { m_ui.initUserInterface(); }
-void UIServer::setTheme(UI_STYLE_COLORS theme) { m_ui.setStyleColors(theme); }
-void UIServer::update() { m_ui.updateUserInterface(); }
-void UIServer::destroy() { m_ui.destroyUserInterface(); }
+void UIServer::initialize() { ui.initUserInterface(); }
+void UIServer::setTheme(UI_STYLE_COLORS theme) { ui.setStyleColors(theme); }
+void UIServer::startUI() { ui.startUserInterface(); }
+void UIServer::endUI() { ui.endUserInterface(); }
+void UIServer::destroy() { ui.destroyUserInterface(); }
+
+UI UIServer::getUI() { return ui; }

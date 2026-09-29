@@ -29,6 +29,40 @@ namespace Nemark {
             void End() { ImGui::End(); }
 
             //Child Windows
+            bool BeginChild(const char* str_id, const ImVec2& size = ImVec2(0, 0), ImGuiChildFlags child_flags = 0, ImGuiWindowFlags window_flags = 0) { ImGui::BeginChild(str_id, size, child_flags, window_flags); }
+            bool BeginChild(ImGuiID id, const ImVec2& size = ImVec2(0, 0), ImGuiChildFlags child_flags = 0, ImGuiWindowFlags window_flags = 0) { ImGui::BeginChild(id, size, child_flags, window_flags); }
+
+            //Window uilities
+            bool IsWindowAppearing() { ImGui::IsWindowAppearing(); }
+            bool IsWindowCollapsed() { ImGui::IsWindowCollapsed(); }
+            bool IsWindowFocused(ImGuiFocusedFlags flags=0) { ImGui::IsWindowFocused(flags); }
+            bool IsWindowHovered(ImGuiHoveredFlags flags=0) { ImGui::IsWindowHovered(flags); }
+            ImDrawList* GetWindowDrawList() { ImGui::GetWindowDrawList(); }
+            float GetWindowDpiScale() { ImGui::GetWindowDpiScale(); }
+            ImVec2 GetWindowPos() { ImGui::GetWindowPos(); }
+            ImVec2 GetWindowSize() { ImGui::GetWindowSize(); }
+            float GetWindowWidtht() { ImGui::GetWindowWidth(); }
+            float GetWindowHeight() { ImGui::GetWindowHeight(); }
+            ImGuiViewport* GetWindowViewport();
+
+            //Window manipulation
+            void SetNextWindowPos(const ImVec2& pos, ImGuiCond cond = 0, const ImVec2& pivot = ImVec2(0, 0)) { ImGui::SetNextWindowPos(pos, cond, pivot); }
+            void SetNextWindowSize(const ImVec2& size, ImGuiCond cond = 0) { ImGui::SetNextWindowSize(size, cond); }                  
+            void SetNextWindowSizeConstraints(const ImVec2& size_min, const ImVec2& size_max, ImGuiSizeCallback custom_callback = NULL, void* custom_callback_data = NULL) { ImGui::SetNextWindowSizeConstraints(size_min, size_max, custom_callback, custom_callback_data); }
+            void SetNextWindowContentSize(const ImVec2& size) { ImGui::SetNextWindowContentSize(size); }                          
+            void SetNextWindowCollapsed(bool collapsed, ImGuiCond cond = 0) { ImGui::SetWindowCollapsed(collapsed, cond); }
+            void SetNextWindowFocus() { ImGui::SetNextWindowFocus(); }
+            void SetNextWindowScroll(const ImVec2& scroll);                                  
+            void SetNextWindowBgAlpha(float alpha);                                          
+            void SetNextWindowViewport(ImGuiID viewport_id);                                 
+            void SetWindowPos(const ImVec2& pos, ImGuiCond cond = 0);                         
+            void SetWindowSize(const ImVec2& size, ImGuiCond cond = 0);                       
+            void SetWindowCollapsed(bool collapsed, ImGuiCond cond = 0);                     
+            void SetWindowFocus();                                                           
+            void SetWindowPos(const char* name, const ImVec2& pos, ImGuiCond cond = 0);      
+            void SetWindowSize(const char* name, const ImVec2& size, ImGuiCond cond = 0);    
+            void SetWindowCollapsed(const char* name, bool collapsed, ImGuiCond cond = 0);   
+            void SetWindowFocus(const char* name);                                           
 
             //Other layout functions
             void Separator() { ImGui::Separator(); }

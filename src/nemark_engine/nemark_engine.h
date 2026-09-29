@@ -48,9 +48,12 @@ namespace Nemark
         public:
             void initialize();
             void setTheme(UI_STYLE_COLORS theme);
-            void update();
+            void startUI();
+            void endUI();
             void destroy();
-        private:
-            UI m_ui;
+
+            UI getUI();
+            
+            UI ui;
     };
 } // namespace Engine

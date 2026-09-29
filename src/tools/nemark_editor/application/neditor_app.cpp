@@ -6,8 +6,14 @@ Nemark::Output output;
 Nemark::WindowServer windowServer;
 Nemark::InputServer inputServer;
 Nemark::UIServer uiServer;
+Nemark::UI ui = uiServer.getUI();
 
 using namespace NEditorApp;
+
+void updateUI()
+{
+    //Some ui functions
+}
 
 int Application::run()
 {   
@@ -16,10 +22,12 @@ int Application::run()
     uiServer.setTheme(Nemark::UI_STYLE_COLORS::DARK);
 
     while (!windowServer.shouldWindowClose(windowServer.getCurrentWindow()))
-    {
+    {   
+        uiServer.startUI();
         windowServer.updateWindow(windowServer.getCurrentWindow());
+        updateUI();
         inputServer.processInput(windowServer.getCurrentWindow());
-        uiServer.update();
+        uiServer.endUI();
     }
 
     uiServer.destroy();
