@@ -25,18 +25,19 @@ namespace Nemark {
 
             //ImGUI WIRE-UPS
             //Windows
-            bool Begin(const char* name, bool* p_open = NULL, ImGuiWindowFlags flags = 0) { ImGui::Begin(name, p_open, flags); }
+            bool Begin(const char* name, bool* p_open = NULL, ImGuiWindowFlags flags = 0) { return ImGui::Begin(name, p_open, flags); }
             void End() { ImGui::End(); }
 
             //Child Windows
-            bool BeginChild(const char* str_id, const ImVec2& size = ImVec2(0, 0), ImGuiChildFlags child_flags = 0, ImGuiWindowFlags window_flags = 0) { ImGui::BeginChild(str_id, size, child_flags, window_flags); }
-            bool BeginChild(ImGuiID id, const ImVec2& size = ImVec2(0, 0), ImGuiChildFlags child_flags = 0, ImGuiWindowFlags window_flags = 0) { ImGui::BeginChild(id, size, child_flags, window_flags); }
+            bool BeginChild(const char* str_id, const ImVec2& size = ImVec2(0, 0), ImGuiChildFlags child_flags = 0, ImGuiWindowFlags window_flags = 0) { return ImGui::BeginChild(str_id, size, child_flags, window_flags); }
+            bool BeginChild(ImGuiID id, const ImVec2& size = ImVec2(0, 0), ImGuiChildFlags child_flags = 0, ImGuiWindowFlags window_flags = 0) { return ImGui::BeginChild(id, size, child_flags, window_flags); }
+            void EndChild() { ImGui::EndChild(); }
 
             //Window uilities
-            bool IsWindowAppearing() { ImGui::IsWindowAppearing(); }
-            bool IsWindowCollapsed() { ImGui::IsWindowCollapsed(); }
-            bool IsWindowFocused(ImGuiFocusedFlags flags=0) { ImGui::IsWindowFocused(flags); }
-            bool IsWindowHovered(ImGuiHoveredFlags flags=0) { ImGui::IsWindowHovered(flags); }
+            bool IsWindowAppearing() { return ImGui::IsWindowAppearing(); }
+            bool IsWindowCollapsed() { return ImGui::IsWindowCollapsed(); }
+            bool IsWindowFocused(ImGuiFocusedFlags flags=0) { return ImGui::IsWindowFocused(flags); }
+            bool IsWindowHovered(ImGuiHoveredFlags flags=0) { return ImGui::IsWindowHovered(flags); }
             ImDrawList* GetWindowDrawList() { ImGui::GetWindowDrawList(); }
             float GetWindowDpiScale() { ImGui::GetWindowDpiScale(); }
             ImVec2 GetWindowPos() { ImGui::GetWindowPos(); }
@@ -62,7 +63,27 @@ namespace Nemark {
             void SetWindowPos(const char* name, const ImVec2& pos, ImGuiCond cond = 0);      
             void SetWindowSize(const char* name, const ImVec2& size, ImGuiCond cond = 0);    
             void SetWindowCollapsed(const char* name, bool collapsed, ImGuiCond cond = 0);   
-            void SetWindowFocus(const char* name);                                           
+            void SetWindowFocus(const char* name);            
+            
+            // Windows Scrolling
+            float GetScrollX() { ImGui::GetScrollX(); }
+            float GetScrollY() { ImGui::GetScrollY(); }
+            void SetScrollX(float scroll_x) { ImGui::SetScrollX(scroll_x); }
+            void SetScrollY(float scroll_y) { ImGui::SetScrollX(scroll_y); }
+            float GetScrollMaxX() { ImGui::GetScrollMaxX(); }
+            float GetScrollMaxY() { ImGui::GetScrollMaxY(); }
+            void SetScrollHereX(float center_x_ratio = 0.5f) { ImGui::SetScrollHereX(center_x_ratio); };
+            void SetScrollHereY(float center_y_ratio = 0.5f) { ImGui::SetScrollHereY(center_y_ratio); };
+            void SetScrollFromPosX(float local_x, float center_x_ratio = 0.5f) { ImGui::SetScrollFromPosX(local_x, center_x_ratio); }
+            void SetScrollFromPosY(float local_y, float center_y_ratio = 0.5f) { ImGui::SetScrollFromPosY(local_y, center_y_ratio); }
+
+            // Parameters stacks (font)
+
+            // Parameters stacks (shared)
+
+            // Parameters stacks (current window)
+
+            // Layout cursor positioning
 
             //Other layout functions
             void Separator() { ImGui::Separator(); }
@@ -90,6 +111,20 @@ namespace Nemark {
             void BulletText(const char* text) { ImGui::BulletText(text); }
             void SeparatorText(const char* label) { ImGui::SeparatorText(label); }
 
+            //Widgets: Main
+            bool Button(const char* label, const ImVec2& size = ImVec2(0, 0)) { return ImGui::Button(label, size); }
+            bool SmallButton(const char* label) { return ImGui::SmallButton(label); }
+            bool InvisibleButton(const char* str_id, const ImVec2& size, ImGuiButtonFlags flags = 0) { return ImGui::InvisibleButton(str_id, size, flags); }
+            bool ArrowButton(const char* str_id, ImGuiDir dir) { ImGui::ArrowButton(str_id, dir); }
+            bool Checkbox(const char* label, bool* v) { return ImGui::Checkbox(label, v); }
+            bool CheckboxFlags(const char* label, int* flags, int flags_value) { return ImGui::CheckboxFlags(label, flags, flags_value); }
+            bool CheckboxFlags(const char* label, unsigned int* flags, unsigned int flags_value) { return ImGui::CheckboxFlags(label, flags, flags_value); }
+            bool RadioButton(const char* label, bool active) { return ImGui::RadioButton(label, active); }
+            bool RadioButton(const char* label, int* v, int v_button) { return ImGui::RadioButton(label, v, v_button); }
+            void ProgressBar(float fraction, const ImVec2& size_arg = ImVec2(-FLT_MIN, 0), const char* overlay = NULL) { ImGui::ProgressBar(fraction, size_arg, overlay); }
+            void Bullet() { ImGui::Bullet(); }
+            bool TextLink(const char* label) { ImGui::TextLink(label); }
+            bool TextLinkOpenURL(const char* label, const char* url = NULL) { ImGui::TextLinkOpenURL(label, url); }
 
         private:
             float m_mainScale = 1.0f;

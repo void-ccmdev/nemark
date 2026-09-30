@@ -14,8 +14,10 @@ set(ENGINE_DIR "${SRC_DIR}/nemark_engine")
 set(EDITOR_DIR "${SRC_DIR}/tools/nemark_editor")
 #set(MAPPER_DIR "${SRC_DIR}/tools/mapper")
 
-set(LIB_DIR "${ENGINE_DIR}/dependencies/lib")
-set(INCLUDE_DIR "${ENGINE_DIR}/dependencies/include")
+set(DEPENDENCIES_DIR "${ENGINE_DIR}/dependencies")
+set(LIB_DIR "${DEPENDENCIES_DIR}/lib")
+set(INCLUDE_DIR "${DEPENDENCIES_DIR}/include")
+
 
 #------------------------
 # DEPENDENCIES
@@ -77,6 +79,10 @@ target_include_directories(glad
         "${INCLUDE_DIR}"
 )
 
+#--GLM--
+
+##WHAT THE FICKL
+
 #------------------------
 # ENGINE
 #------------------------
@@ -91,8 +97,7 @@ add_library(nemark_engine STATIC
 
 target_include_directories(nemark_engine
     PUBLIC
-        "${SRC_DIR}"
-        "${ENGINE_DIR}"
+        "${DEPENDENCIES_DIR}"
 )
 
 target_link_libraries(nemark_engine
@@ -100,6 +105,7 @@ target_link_libraries(nemark_engine
         imgui
         glad
         glfw
+        #glm
 )
 
 #------------------------

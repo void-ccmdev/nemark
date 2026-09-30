@@ -10,16 +10,21 @@ Nemark::UI ui = uiServer.getUI();
 
 using namespace NEditorApp;
 
+bool show = true;
+bool smth = false;
+
 void updateUI()
 {
-    //Some ui functions
+    //UI
 }
 
 int Application::run()
 {   
     windowServer.createWindow(500, 500, title);
     uiServer.initialize();
-    uiServer.setTheme(Nemark::UI_STYLE_COLORS::DARK);
+    uiServer.setTheme(Nemark::UI_STYLE_COLORS::CLASSIC);
+    
+    //Math::Vector3f vector = Math::Vector3f(); --Does not work yet :(
 
     while (!windowServer.shouldWindowClose(windowServer.getCurrentWindow()))
     {   
