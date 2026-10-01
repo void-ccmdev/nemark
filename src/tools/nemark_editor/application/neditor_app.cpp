@@ -12,10 +12,28 @@ using namespace NEditorApp;
 
 bool show = true;
 bool smth = false;
+float val = 0.1f;
+
+float s_val = 0.1f;
+float a_val = 0.1f;
 
 void updateUI()
 {
-    //UI
+    if (ui.Begin("Hello", &show)) {
+        ui.Text("Helooo!");
+        ui.Checkbox("Light theme", &smth);
+        ui.DragFloat("DragFloat", &val, 0.3f, 0.0f, 100.0f);
+        ui.SliderFloat("Slider Float", &s_val, 0.0f, 100.0f);
+        ui.SliderAngle("AngleSlider", &a_val);
+    }
+    ui.End();
+
+    if (smth) {
+        uiServer.setTheme(Nemark::UI_STYLE_COLORS::LIGHT);
+    } else {
+        uiServer.setTheme(Nemark::UI_STYLE_COLORS::DARK);
+    }
+
 }
 
 int Application::run()

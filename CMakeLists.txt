@@ -28,10 +28,10 @@ set(INCLUDE_DIR "${DEPENDENCIES_DIR}/include")
 if(WIN32)
     add_library(glfw STATIC IMPORTED)
 
-    set_target_properties(glfw PROPERTIES 
+    set_target_properties(glfw PROPERTIES
         IMPORTED_LOCATION
             "${LIB_DIR}/glfw3.lib"
-        INTERFACE_INCLUDE_DIRECTORIES 
+        INTERFACE_INCLUDE_DIRECTORIES
             "${INCLUDE_DIR}"
     )
     set(OPENGL_GLFW_TARGET glfw)

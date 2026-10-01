@@ -38,13 +38,13 @@ namespace Nemark {
             bool IsWindowCollapsed() { return ImGui::IsWindowCollapsed(); }
             bool IsWindowFocused(ImGuiFocusedFlags flags=0) { return ImGui::IsWindowFocused(flags); }
             bool IsWindowHovered(ImGuiHoveredFlags flags=0) { return ImGui::IsWindowHovered(flags); }
-            ImDrawList* GetWindowDrawList() { ImGui::GetWindowDrawList(); }
-            float GetWindowDpiScale() { ImGui::GetWindowDpiScale(); }
-            ImVec2 GetWindowPos() { ImGui::GetWindowPos(); }
-            ImVec2 GetWindowSize() { ImGui::GetWindowSize(); }
-            float GetWindowWidtht() { ImGui::GetWindowWidth(); }
-            float GetWindowHeight() { ImGui::GetWindowHeight(); }
-            ImGuiViewport* GetWindowViewport();
+            ImDrawList* GetWindowDrawList() { return ImGui::GetWindowDrawList(); }
+            float GetWindowDpiScale() { return ImGui::GetWindowDpiScale(); }
+            ImVec2 GetWindowPos() { return ImGui::GetWindowPos(); }
+            ImVec2 GetWindowSize() { return ImGui::GetWindowSize(); }
+            float GetWindowWidtht() { return ImGui::GetWindowWidth(); }
+            float GetWindowHeight() { return ImGui::GetWindowHeight(); }
+            ImGuiViewport* GetWindowViewport() { return ImGui::GetWindowViewport(); };
 
             //Window manipulation
             void SetNextWindowPos(const ImVec2& pos, ImGuiCond cond = 0, const ImVec2& pivot = ImVec2(0, 0)) { ImGui::SetNextWindowPos(pos, cond, pivot); }
@@ -66,19 +66,19 @@ namespace Nemark {
             void SetWindowFocus(const char* name);            
             
             // Windows Scrolling
-            float GetScrollX() { ImGui::GetScrollX(); }
-            float GetScrollY() { ImGui::GetScrollY(); }
+            float GetScrollX() {  return ImGui::GetScrollX(); }
+            float GetScrollY() {  return ImGui::GetScrollY(); }
             void SetScrollX(float scroll_x) { ImGui::SetScrollX(scroll_x); }
             void SetScrollY(float scroll_y) { ImGui::SetScrollX(scroll_y); }
-            float GetScrollMaxX() { ImGui::GetScrollMaxX(); }
-            float GetScrollMaxY() { ImGui::GetScrollMaxY(); }
+            float GetScrollMaxX() {  return ImGui::GetScrollMaxX(); }
+            float GetScrollMaxY() {  return ImGui::GetScrollMaxY(); }
             void SetScrollHereX(float center_x_ratio = 0.5f) { ImGui::SetScrollHereX(center_x_ratio); };
             void SetScrollHereY(float center_y_ratio = 0.5f) { ImGui::SetScrollHereY(center_y_ratio); };
             void SetScrollFromPosX(float local_x, float center_x_ratio = 0.5f) { ImGui::SetScrollFromPosX(local_x, center_x_ratio); }
             void SetScrollFromPosY(float local_y, float center_y_ratio = 0.5f) { ImGui::SetScrollFromPosY(local_y, center_y_ratio); }
 
             // Parameters stacks (font)
-
+            
             // Parameters stacks (shared)
 
             // Parameters stacks (current window)
@@ -123,8 +123,50 @@ namespace Nemark {
             bool RadioButton(const char* label, int* v, int v_button) { return ImGui::RadioButton(label, v, v_button); }
             void ProgressBar(float fraction, const ImVec2& size_arg = ImVec2(-FLT_MIN, 0), const char* overlay = NULL) { ImGui::ProgressBar(fraction, size_arg, overlay); }
             void Bullet() { ImGui::Bullet(); }
-            bool TextLink(const char* label) { ImGui::TextLink(label); }
-            bool TextLinkOpenURL(const char* label, const char* url = NULL) { ImGui::TextLinkOpenURL(label, url); }
+            bool TextLink(const char* label) { return ImGui::TextLink(label); }
+            bool TextLinkOpenURL(const char* label, const char* url = NULL) { return ImGui::TextLinkOpenURL(label, url); }
+
+            // Widgets: Images
+            void Image(ImTextureRef tex_ref, const ImVec2& image_size, const ImVec2& uv0 = ImVec2(0, 0), const ImVec2& uv1 = ImVec2(1, 1)) { ImGui::Image(tex_ref, image_size, uv0, uv1); }
+            void ImageWithBg(ImTextureRef tex_ref, const ImVec2& image_size, const ImVec2& uv0 = ImVec2(0, 0), const ImVec2& uv1 = ImVec2(1, 1), const ImVec4& bg_col = ImVec4(0, 0, 0, 0), const ImVec4& tint_col = ImVec4(1, 1, 1, 1)) { ImGui::ImageWithBg(tex_ref, image_size, uv0, uv1, bg_col, tint_col); }
+            void ImageButton(const char* str_id, ImTextureRef tex_ref, const ImVec2& image_size, const ImVec2& uv0 = ImVec2(0, 0), const ImVec2& uv1 = ImVec2(1, 1), const ImVec4& bg_col = ImVec4(0, 0, 0, 0), const ImVec4& tint_col = ImVec4(1, 1, 1, 1)) { ImGui::ImageButton(str_id, tex_ref, image_size, uv0, uv1, bg_col, tint_col); }
+
+            // Widgets: Combo Box (Dropdown)
+            bool BeginCombo(const char* label, const char* preview_value, ImGuiComboFlags flags = 0) { return ImGui::BeginCombo(label, preview_value, flags); }
+            void EndCombo() { ImGui::EndCombo(); }
+            bool Combo(const char* label, int* current_item, const char* const items[], int items_count, int popup_max_height_in_items = -1) { return ImGui::Combo(label, current_item, items, items_count, popup_max_height_in_items); }
+            bool Combo(const char* label, int* current_item, const char* items_separated_by_zeros, int popup_max_height_in_items = -1) { return ImGui::Combo(label, current_item, items_separated_by_zeros, popup_max_height_in_items); }   
+            bool Combo(const char* label, int* current_item, const char* (*getter)(void* user_data, int idx), void* user_data, int items_count, int popup_max_height_in_items = -1) { return ImGui::Combo(label, current_item, getter, user_data, items_count, popup_max_height_in_items); }
+
+            // Widgets: Drag Sliders
+            bool DragFloat(const char* label, float* v, float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::DragFloat(label, v, v_speed, v_min, v_max, format, flags); }
+            bool DragFloat2(const char* label, float v[2], float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::DragFloat(label, v, v_speed, v_min, v_max, format, flags); }
+            bool DragFloat3(const char* label, float v[3], float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::DragFloat(label, v, v_speed, v_min, v_max, format, flags); }
+            bool DragFloat4(const char* label, float v[4], float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::DragFloat(label, v, v_speed, v_min, v_max, format, flags); }
+            bool DragFloatRange2(const char* label, float* v_current_min, float* v_current_max, float v_speed = 1.0f, float v_min = 0.0f, float v_max = 0.0f, const char* format = "%.3f", const char* format_max = NULL, ImGuiSliderFlags flags = 0) { return ImGui::DragFloatRange2(label, v_current_min, v_current_max, v_speed, v_min, v_max, format, format_max, flags); }
+            bool DragInt(const char* label, int* v, float v_speed = 1.0f, int v_min = 0, int v_max = 0, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::DragInt(label, v, v_speed, v_min, v_max, format, flags); }  
+            bool DragInt2(const char* label, int v[2], float v_speed = 1.0f, int v_min = 0, int v_max = 0, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::DragInt(label, v, v_speed, v_min, v_max, format, flags); }
+            bool DragInt3(const char* label, int v[3], float v_speed = 1.0f, int v_min = 0, int v_max = 0, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::DragInt(label, v, v_speed, v_min, v_max, format, flags); }
+            bool DragInt4(const char* label, int v[4], float v_speed = 1.0f, int v_min = 0, int v_max = 0, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::DragInt(label, v, v_speed, v_min, v_max, format, flags); }
+            bool DragIntRange2(const char* label, int* v_current_min, int* v_current_max, float v_speed = 1.0f, int v_min = 0, int v_max = 0, const char* format = "%d", const char* format_max = NULL, ImGuiSliderFlags flags = 0) { return ImGui::DragIntRange2(label, v_current_min, v_current_max, v_speed, v_min, v_max, format, format_max, flags); }
+            bool DragScalar(const char* label, ImGuiDataType data_type, void* p_data, float v_speed = 1.0f, const void* p_min = NULL, const void* p_max = NULL, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::DragScalar(label, data_type, p_data, v_speed, p_min, p_max, format, flags); }
+            bool DragScalarN(const char* label, ImGuiDataType data_type, void* p_data, int components, float v_speed = 1.0f, const void* p_min = NULL, const void* p_max = NULL, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::DragScalar(label, data_type, p_data, v_speed, p_min, p_max, format, flags); }
+
+            // Widgets: Regular Sliders
+            bool SliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::SliderFloat(label, v, v_min, v_max, format, flags); }
+            bool SliderFloat2(const char* label, float v[2], float v_min, float v_max, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::SliderFloat(label, v, v_min, v_max, format, flags); }
+            bool SliderFloat3(const char* label, float v[3], float v_min, float v_max, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::SliderFloat(label, v, v_min, v_max, format, flags); }
+            bool SliderFloat4(const char* label, float v[4], float v_min, float v_max, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::SliderFloat(label, v, v_min, v_max, format, flags); }
+            bool SliderAngle(const char* label, float* v_rad, float v_degrees_min = -360.0f, float v_degrees_max = +360.0f, const char* format = "%.0f deg", ImGuiSliderFlags flags = 0) { return ImGui::SliderAngle(label, v_rad, v_degrees_min, v_degrees_max, format, flags); }
+            bool SliderInt(const char* label, int* v, int v_min, int v_max, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::SliderInt(label, v, v_min, v_max, format, flags); }
+            bool SliderInt2(const char* label, int v[2], int v_min, int v_max, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::SliderInt(label, v, v_min, v_max, format, flags); }
+            bool SliderInt3(const char* label, int v[3], int v_min, int v_max, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::SliderInt(label, v, v_min, v_max, format, flags); }
+            bool SliderInt4(const char* label, int v[4], int v_min, int v_max, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::SliderInt(label, v, v_min, v_max, format, flags); }
+            bool SliderScalar(const char* label, ImGuiDataType data_type, void* p_data, const void* p_min, const void* p_max, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::SliderScalar(label, data_type, p_data, p_min, p_max, format, flags); }
+            bool SliderScalarN(const char* label, ImGuiDataType data_type, void* p_data, int components, const void* p_min, const void* p_max, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::SliderScalarN(label, data_type, p_data, components, p_min, p_max, format, flags); }
+            bool VSliderFloat(const char* label, const ImVec2& size, float* v, float v_min, float v_max, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::VSliderFloat(label, size, v, v_min, v_max, format, flags); }
+            bool VSliderInt(const char* label, const ImVec2& size, int* v, int v_min, int v_max, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::VSliderInt(label, size, v, v_min, v_max, format, flags); }
+            bool VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType data_type, void* p_data, const void* p_min, const void* p_max, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::VSliderScalar(label, size, data_type, p_data, p_min, p_max, format, flags); }
 
         private:
             float m_mainScale = 1.0f;
