@@ -6,7 +6,7 @@
 
 using namespace Nemark;
 
-void Window::create(unsigned int width, unsigned int height, std::string& title)
+void Window::create(unsigned int width, unsigned int height, std::string& title, bool maximized)
 {
     if (glfwInit() != GLFW_TRUE) {
         std::runtime_error("Failed to initialize GLFW!");
@@ -16,7 +16,10 @@ void Window::create(unsigned int width, unsigned int height, std::string& title)
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 
-    glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+    if (maximized) {
+        glfwWindowHint(GLFW_MAXIMIZED, GLFW_TRUE);
+    }
+    
 
     m_window = glfwCreateWindow(width, height, title.c_str(), nullptr, nullptr);
     if (m_window == nullptr) {

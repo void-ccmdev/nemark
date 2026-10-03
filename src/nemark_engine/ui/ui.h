@@ -183,6 +183,26 @@ namespace Nemark {
             bool InputDouble(const char* label, double* v, double step = 0.0, double step_fast = 0.0, const char* format = "%.6f", ImGuiInputTextFlags flags = 0) { return ImGui::InputDouble(label, v, step, step_fast, format, flags); }
             bool InputScalar(const char* label, ImGuiDataType data_type, void* p_data, const void* p_step = NULL, const void* p_step_fast = NULL, const char* format = NULL, ImGuiInputTextFlags flags = 0) { return ImGui::InputScalar(label, data_type, p_data, p_step, p_step_fast, format, flags); }
             bool InputScalarN(const char* label, ImGuiDataType data_type, void* p_data, int components, const void* p_step = NULL, const void* p_step_fast = NULL, const char* format = NULL, ImGuiInputTextFlags flags = 0) { return ImGui::InputScalarN(label, data_type, p_data, components, p_step, p_step_fast, format, flags); }
+        
+            // Widgets: Color Editor/Picker
+
+            // Widgets: Trees
+
+            // Widgets: Selectables
+
+            // Widgets: List Boxes
+
+            // Widgets: Data Plotting
+
+            // Widgets: Menus
+            bool BeginMenuBar() { return ImGui::BeginMenuBar(); }                                         
+            void EndMenuBar() { ImGui::EndMenuBar(); }                                          
+            bool BeginMainMenuBar() { return ImGui::BeginMainMenuBar(); }                                              
+            void EndMainMenuBar() { ImGui::EndMainMenuBar(); }                                                
+            bool BeginMenu(const char* label, bool enabled = true) { return ImGui::BeginMenu(label, enabled); }              
+            void EndMenu() { ImGui::EndMenu(); }                                    
+            bool MenuItem(const char* label, const char* shortcut = NULL, bool selected = false, bool enabled = true) { return ImGui::MenuItem(label, shortcut, selected, enabled); }
+            bool MenuItem(const char* label, const char* shortcut, bool* p_selected, bool enabled = true) { return ImGui::MenuItem(label, shortcut, p_selected, enabled); }           
         private:
             float m_mainScale = 1.0f;
             ImGuiIO* m_io = nullptr;

@@ -1,14 +1,10 @@
-#include "neditor_app.h"
-
 #include "nemark_engine/nemark_engine.h"
 
-Nemark::Output output;
+Nemark::OutputServer output;
 Nemark::WindowServer windowServer;
 Nemark::InputServer inputServer;
 Nemark::UIServer uiServer;
 Nemark::UI ui = uiServer.getUI();
-
-using namespace NEditorApp;
 
 bool show = true;
 bool smth = false;
@@ -52,9 +48,10 @@ void updateUI()
 
 }
 
-int Application::run()
+int main()
 {   
-    windowServer.createWindow(500, 500, title);
+    std::string title = "Sandbox!";
+    windowServer.createWindow(500, 500, title, true);
     uiServer.initialize();
     uiServer.setTheme(Nemark::UI_STYLE_COLORS::CLASSIC);
     

@@ -12,7 +12,8 @@ set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
 
 set(ENGINE_DIR "${SRC_DIR}/nemark_engine")
 set(EDITOR_DIR "${SRC_DIR}/tools/nemark_editor")
-#set(MAPPER_DIR "${SRC_DIR}/tools/mapper")
+set(SANDBOX_DIR "${SRC_DIR}/sandbox")
+set(MAPPER_DIR "${SRC_DIR}/tools/hinge_mapper")
 
 set(DEPENDENCIES_DIR "${ENGINE_DIR}/dependencies")
 set(LIB_DIR "${DEPENDENCIES_DIR}/lib")
@@ -133,3 +134,41 @@ target_link_libraries(nemark_editor
 )
 
 #--Mapper
+
+file(GLOB_RECURSE MAPPER_SOURCES CONFIGURE_DEPENDS
+    "${MAPPER_DIR}/*.cpp"
+)
+
+add_executable(hinge_mapper
+    ${MAPPER_SOURCES}
+)
+
+target_include_directories(hinge_mapper
+    PRIVATE
+        "${SRC_DIR}"
+)
+
+target_link_libraries(hinge_mapper
+    PRIVATE
+        nemark_engine
+)
+
+#--Sandbox
+
+file(GLOB_RECURSE SANDBOX_SOURCES CONFIGURE_DEPENDS
+    "${SANDBOX_DIR}/*.cpp"
+)
+
+add_executable(sandbox
+    ${SANDBOX_SOURCES}
+)
+
+target_include_directories(sandbox
+    PRIVATE
+        "${SRC_DIR}"
+)
+
+target_link_libraries(sandbox
+    PRIVATE
+        nemark_engine
+)

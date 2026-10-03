@@ -10,7 +10,7 @@
 
 namespace Nemark
 {
-    class Output {
+    class OutputServer {
         public:
             void print(std::string value);
             void println(std::string value);
@@ -24,7 +24,7 @@ namespace Nemark
 
     class WindowServer {
         public:
-            void createWindow(unsigned int width, unsigned int height, std::string& title);
+            void createWindow(unsigned int width, unsigned int height, std::string& title, bool maximized);
             void setWindowTitle(std::string& title, Window window);
             void updateWindow(Window window);
             void closeWindow(Window window);

@@ -10,21 +10,21 @@ using namespace Nemark;
 /////// -OUTPUT- ////////
 /////////////////////////
 
-void Output::print(std::string value) { std::cout << value.c_str(); m_log.push_back(value); }
-void Output::println(std::string value) { std::cout << value.c_str() << std::endl; m_log.push_back(value + "\n"); }
-void Output::printErr(std::string value) { std::cerr << "Error: " << value.c_str() << std::endl; m_log.push_back("Error: " + value + "\n"); }
-void Output::printWarning(std::string value) { std::cout << "Warning: " << value.c_str() << std::endl; m_log.push_back("Warning: " + value + "\n"); }
+void OutputServer::print(std::string value) { std::cout << value.c_str(); m_log.push_back(value); }
+void OutputServer::println(std::string value) { std::cout << value.c_str() << std::endl; m_log.push_back(value + "\n"); }
+void OutputServer::printErr(std::string value) { std::cerr << "Error: " << value.c_str() << std::endl; m_log.push_back("Error: " + value + "\n"); }
+void OutputServer::printWarning(std::string value) { std::cout << "Warning: " << value.c_str() << std::endl; m_log.push_back("Warning: " + value + "\n"); }
 
-std::vector<std::string> Output::getOutputLog() { return m_log; }
+std::vector<std::string> OutputServer::getOutputLog() { return m_log; }
 
 /////////////////////////
 /////// -WINDOW- ////////
 /////////////////////////
 
-void WindowServer::createWindow(unsigned int width, unsigned int height, std::string& title)
+void WindowServer::createWindow(unsigned int width, unsigned int height, std::string& title, bool maximized)
 {
     Window window;
-    window.create(width, height, title);
+    window.create(width, height, title, maximized);
     m_currentWindow = window;
 }
 void WindowServer::setWindowTitle(std::string& title, Window window) { window.setTitle(title); }

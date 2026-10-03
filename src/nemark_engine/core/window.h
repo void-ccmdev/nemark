@@ -9,7 +9,8 @@ namespace Nemark {
             void create(
                 unsigned int width,
                 unsigned int height,
-                std::string& title
+                std::string& title,
+                bool maximized
             );
 
             void pollEvents();
