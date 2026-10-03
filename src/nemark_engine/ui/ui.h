@@ -168,6 +168,21 @@ namespace Nemark {
             bool VSliderInt(const char* label, const ImVec2& size, int* v, int v_min, int v_max, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::VSliderInt(label, size, v, v_min, v_max, format, flags); }
             bool VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType data_type, void* p_data, const void* p_min, const void* p_max, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::VSliderScalar(label, size, data_type, p_data, p_min, p_max, format, flags); }
 
+            // Widgets: Input with Keyboard
+            bool InputText(const char* label, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL) { return ImGui::InputText(label, buf, buf_size, flags); }
+            bool InputTextMultiline(const char* label, char* buf, size_t buf_size, const ImVec2& size = ImVec2(0, 0), ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL) { return ImGui::InputTextMultiline(label, buf, buf_size, size, flags, callback, user_data); }
+            bool InputTextWithHint(const char* label, const char* hint, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL) { return ImGui::InputTextWithHint(label, hint, buf, buf_size, flags, callback, user_data); }
+            bool InputFloat(const char* label, float* v, float step = 0.0f, float step_fast = 0.0f, const char* format = "%.3f", ImGuiInputTextFlags flags = 0) { return ImGui::InputFloat(label, v, step, step_fast, format, flags); }
+            bool InputFloat2(const char* label, float v[2], const char* format = "%.3f", ImGuiInputTextFlags flags = 0) { return ImGui::InputFloat2(label, v, format, flags); }
+            bool InputFloat3(const char* label, float v[3], const char* format = "%.3f", ImGuiInputTextFlags flags = 0) { return ImGui::InputFloat3(label, v, format, flags); }
+            bool InputFloat4(const char* label, float v[4], const char* format = "%.3f", ImGuiInputTextFlags flags = 0) { return ImGui::InputFloat4(label, v, format, flags); }
+            bool InputInt(const char* label, int* v, int step = 1, int step_fast = 100, ImGuiInputTextFlags flags = 0) { return ImGui::InputInt(label, v, step, step_fast, flags); }
+            bool InputInt2(const char* label, int v[2], ImGuiInputTextFlags flags = 0) { return ImGui::InputInt2(label, v, flags); }
+            bool InputInt3(const char* label, int v[3], ImGuiInputTextFlags flags = 0) { return ImGui::InputInt3(label, v, flags); }
+            bool InputInt4(const char* label, int v[4], ImGuiInputTextFlags flags = 0) { return ImGui::InputInt4(label, v, flags); }
+            bool InputDouble(const char* label, double* v, double step = 0.0, double step_fast = 0.0, const char* format = "%.6f", ImGuiInputTextFlags flags = 0) { return ImGui::InputDouble(label, v, step, step_fast, format, flags); }
+            bool InputScalar(const char* label, ImGuiDataType data_type, void* p_data, const void* p_step = NULL, const void* p_step_fast = NULL, const char* format = NULL, ImGuiInputTextFlags flags = 0) { return ImGui::InputScalar(label, data_type, p_data, p_step, p_step_fast, format, flags); }
+            bool InputScalarN(const char* label, ImGuiDataType data_type, void* p_data, int components, const void* p_step = NULL, const void* p_step_fast = NULL, const char* format = NULL, ImGuiInputTextFlags flags = 0) { return ImGui::InputScalarN(label, data_type, p_data, components, p_step, p_step_fast, format, flags); }
         private:
             float m_mainScale = 1.0f;
             ImGuiIO* m_io = nullptr;

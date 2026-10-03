@@ -17,6 +17,11 @@ float val = 0.1f;
 float s_val = 0.1f;
 float a_val = 0.1f;
 
+const char* menu[] = {"balc", "wwdad", "Dawda", "2313"};
+int current_combo = 1;
+
+bool show_new_window = false;
+
 void updateUI()
 {
     if (ui.Begin("Hello", &show)) {
@@ -25,8 +30,19 @@ void updateUI()
         ui.DragFloat("DragFloat", &val, 0.3f, 0.0f, 100.0f);
         ui.SliderFloat("Slider Float", &s_val, 0.0f, 100.0f);
         ui.SliderAngle("AngleSlider", &a_val);
+
+
+        ui.Combo("SMTH", &current_combo, menu, IM_ARRAYSIZE(menu));
+        ui.Checkbox("Show new Window", &show_new_window);
+
     }
     ui.End();
+
+    if (show_new_window) {
+        ui.Begin("New Window", &show_new_window);
+        ui.Text("Heloo!!!");
+        ui.End();
+    }
 
     if (smth) {
         uiServer.setTheme(Nemark::UI_STYLE_COLORS::LIGHT);
