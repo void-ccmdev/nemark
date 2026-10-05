@@ -1,5 +1,6 @@
 #include "nemark_engine.h"
 
+#include <any>
 #include <iostream>
 #include <string>
 #include <vector>
@@ -53,3 +54,11 @@ void UIServer::endUI() { ui.endUserInterface(); }
 void UIServer::destroy() { ui.destroyUserInterface(); }
 
 UI UIServer::getUI() { return ui; }
+
+/////////////////////////
+/////// -GLOBAL- ////////
+/////////////////////////
+
+void GlobalServer::SetVariable(std::string name, std::any value) { m_global.SetVariable(name, value); }
+std::any GlobalServer::GetVariable(std::string name) const { return m_global.GetVariable(name); }
+void GlobalServer::RemoveVariable(std::string name) { m_global.RemoveVariable(name); }

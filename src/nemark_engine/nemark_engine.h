@@ -6,7 +6,7 @@
 #include "core/window.h"
 #include "core/input.h"
 #include "ui/ui.h"
-#include "math/math.h"
+#include "global/global.h"
 
 namespace Nemark
 {
@@ -54,7 +54,16 @@ namespace Nemark
             void destroy();
 
             UI getUI();
-            
+
             UI ui;
+    };
+
+    class GlobalServer {
+        public:
+            void SetVariable(std::string name, std::any value);
+            std::any GetVariable(std::string name) const;
+            void RemoveVariable(std::string name);
+        private:
+            Global m_global;
     };
 } // namespace Engine

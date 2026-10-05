@@ -1,16 +1,20 @@
 #include "global.h"
 
-#include <stdexcept>
 #include "nemark_engine/nemark_engine.h"
+#include <any>
+#include <iostream>
 
 using namespace Nemark;
 
-template <typename T> void Global::SetVariable(std::string name, T value)
+void Global::SetVariable(std::string name, std::any value)
 {
-    m_globals.push_back({name, value});
+    for (auto& global : m_globals) {
+        if (global.first == name) { global.second = value; return;}
+    }
+    m_globals.push_back( {name, value} );
 }
 
-template <typename T> T Global::GetVariable(std::string name)
+std::any Global::GetVariable(std::string name) const
 {
     for (auto& global : m_globals) {
         if (global.first == name) {
@@ -18,5 +22,20 @@ template <typename T> T Global::GetVariable(std::string name)
         }
     }
     Nemark::OutputServer output;
-    output.printErr("Global variable not found: " + name);
+    output.printErr("Can't find global variable: " + name);
+    return nullptr;
+}
+
+void Global::RemoveVariable(std::string name)
+{   int index = 0;
+    for (auto& global : m_globals) {
+        index++;
+        if (global.first == name) {
+            m_globals.erase(m_globals.begin() + index);
+            std::cout << index << std::endl;
+            return;
+        }
+    }
+    Nemark::OutputServer output;
+    output.printErr("Can't remove variable: '" + name + "' : Doesn't exist!");
 }

@@ -1,4 +1,4 @@
-#pragma once 
+#pragma once
 
 #include <any>
 #include <string>
@@ -8,10 +8,11 @@ namespace Nemark
 {
     class Global
     {  public:
-        template <typename T> void SetVariable(std::string name, T value);
-        template <typename T> T GetVariable(std::string name);
+        void SetVariable(std::string name, std::any value);
+        std::any GetVariable(std::string name) const;
+        void RemoveVariable(std::string name);
 
        private:
-        std::vector<std::pair<std::string, std::any>> m_globals;
+        inline static std::vector<std::pair<std::string, std::any>> m_globals;
     };
 }

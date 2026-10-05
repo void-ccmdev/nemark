@@ -4,7 +4,13 @@
 #include "nemark_engine/nemark_engine.h"
 #include "ui/neditor_ui.h"
 
-Nemark::OutputServer output;
+#include <any>
+
+#include <string>
+#include <iostream>
+
+inline Nemark::OutputServer output;
+inline Nemark::GlobalServer globalServer;
 
 using namespace NEditor;
 
@@ -14,6 +20,15 @@ int Application::run()
 {
     NEWindow window;
     NEUI ui;
+
+    globalServer.SetVariable("number1", (int)4);
+    globalServer.SetVariable("number2", (int)91);
+
+    int m1 = std::any_cast<int>(globalServer.GetVariable("number1"));
+    int m2 = std::any_cast<int>(globalServer.GetVariable("number2"));
+
+    std::cout << m1 << std::endl;
+    std::cout << m2 << std::endl;
 
     window.create(width, height, title, maximized);
     ui.initialize();
@@ -32,6 +47,7 @@ int Application::run()
 
     ui.destroyUI();
     window.close();
+
 
     return 0;
 }

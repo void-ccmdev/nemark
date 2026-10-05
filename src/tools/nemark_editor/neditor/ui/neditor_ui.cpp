@@ -1,5 +1,4 @@
 #include "neditor_ui.h"
-#include <iostream>
 
 using namespace NEditor;
 
@@ -37,7 +36,7 @@ void EditorSettings()
 }
 
 bool showAboutPage = false;
-void AboutPage() 
+void AboutPage()
 {
     ui.Begin("About Nemark Editor", &showAboutPage, ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse);
     ui.Text("hii");
@@ -86,13 +85,13 @@ void HandleSceneTree()
 void HandleInspector()
 {
     ui.Begin("Properties", nullptr, ImGuiWindowFlags_NoCollapse);
-    
+
     ui.End();
 }
 void HandleAssetsViewer()
 {
     ui.Begin("Assets Viewer", nullptr, ImGuiWindowFlags_NoCollapse);
-    
+
     ui.End();
 }
 
