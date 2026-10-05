@@ -5,26 +5,28 @@ cmake_policy(SET CMP0072 NEW)
 project(nemark LANGUAGES C CXX)
 
 set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
-set(SRC_DIR "${CMAKE_SOURCE_DIR}/src")
+#------------------------
+# DIRECTORIES
+#------------------------
 
-set(ENGINE_DIR "${SRC_DIR}/nemark_engine")
-set(EDITOR_DIR "${SRC_DIR}/tools/nemark_editor")
-set(SANDBOX_DIR "${SRC_DIR}/sandbox")
-set(MAPPER_DIR "${SRC_DIR}/tools/hinge_mapper")
+set(SRC_DIR         "${CMAKE_SOURCE_DIR}/src")
+set(ENGINE_DIR      "${SRC_DIR}/nemark_engine")
+set(EDITOR_DIR      "${SRC_DIR}/tools/nemark_editor")
+set(SANDBOX_DIR     "${SRC_DIR}/sandbox")
+set(MAPPER_DIR      "${SRC_DIR}/tools/hinge_mapper")
 
 set(DEPENDENCIES_DIR "${ENGINE_DIR}/dependencies")
-set(LIB_DIR "${DEPENDENCIES_DIR}/lib")
-set(INCLUDE_DIR "${DEPENDENCIES_DIR}/include")
-
+set(LIB_DIR          "${DEPENDENCIES_DIR}/lib")
+set(INCLUDE_DIR      "${DEPENDENCIES_DIR}/include")
 
 #------------------------
-# DEPENDENCIES
+# GLFW
 #------------------------
-
-#--GLFW--
 
 if(WIN32)
     add_library(glfw STATIC IMPORTED)
@@ -32,57 +34,94 @@ if(WIN32)
     set_target_properties(glfw PROPERTIES
         IMPORTED_LOCATION
             "${LIB_DIR}/glfw3.lib"
+
         INTERFACE_INCLUDE_DIRECTORIES
             "${INCLUDE_DIR}"
     )
-    set(OPENGL_GLFW_TARGET glfw)
+
+    set(GLFW_TARGET glfw)
 else()
     find_package(glfw3 REQUIRED)
 
     if(TARGET glfw)
-        set(OPENGL_GLFW_TARGET glfw)
+        set(GLFW_TARGET glfw)
+    elseif(TARGET glfw3::glfw)
+        set(GLFW_TARGET glfw3::glfw)
     else()
-        set(OPENGL_GLFW_TARGET glfw3::glfw)
+        message(FATAL_ERROR
+            "GLFW was found, but no usable GLFW target exists."
+        )
     endif()
 endif()
 
-#--ImGui--
+#------------------------
+# GLAD
+#------------------------
 
-add_library(imgui STATIC
-    ${INCLUDE_DIR}/imgui/imgui.cpp
-    ${INCLUDE_DIR}/imgui/imgui_draw.cpp
-    ${INCLUDE_DIR}/imgui/imgui_tables.cpp
-    ${INCLUDE_DIR}/imgui/imgui_widgets.cpp
-    ${INCLUDE_DIR}/imgui/imgui_demo.cpp
+set(GLAD_SOURCE "${ENGINE_DIR}/core/glad.c")
 
-    ${INCLUDE_DIR}/imgui/imgui_impl_glfw.cpp
-    ${INCLUDE_DIR}/imgui/imgui_impl_opengl3.cpp
-)
-
-target_include_directories(imgui PUBLIC
-    ${INCLUDE_DIR}/imgui
-)
-target_compile_definitions(imgui PRIVATE
-    IMGUI_IMPL_OPENGL_LOADER_GLAD
-)
-target_link_libraries(imgui PUBLIC ${OPENGL_GLFW_TARGET})
-
-#--Glad--
-
-if(EXISTS "${ENGINE_DIR}/core/glad.c")
-    add_library(glad STATIC "${ENGINE_DIR}/core/glad.c")
-else()
-    message(FATAL_ERROR "Could not find glad.c in 'src/nemark_engine/core/glad.c', please make sure glad.c is located there :]")
+if(NOT EXISTS "${GLAD_SOURCE}")
+    message(FATAL_ERROR
+        "Could not find glad.c at:\n"
+        "  ${GLAD_SOURCE}"
+    )
 endif()
+
+add_library(glad STATIC
+    "${GLAD_SOURCE}"
+)
 
 target_include_directories(glad
     PUBLIC
         "${INCLUDE_DIR}"
 )
 
-#--GLM--
+#------------------------
+# IMGUI
+#------------------------
 
-##WHAT THE FICKL
+set(IMGUI_DIR "${INCLUDE_DIR}/imgui")
+
+add_library(imgui STATIC
+    "${IMGUI_DIR}/imgui.cpp"
+    "${IMGUI_DIR}/imgui_draw.cpp"
+    "${IMGUI_DIR}/imgui_tables.cpp"
+    "${IMGUI_DIR}/imgui_widgets.cpp"
+    "${IMGUI_DIR}/imgui_demo.cpp"
+
+    "${IMGUI_DIR}/imgui_impl_glfw.cpp"
+    "${IMGUI_DIR}/imgui_impl_opengl3.cpp"
+)
+
+target_include_directories(imgui
+    PUBLIC
+        "${IMGUI_DIR}"
+)
+
+target_compile_definitions(imgui
+    PRIVATE
+        IMGUI_IMPL_OPENGL_LOADER_GLAD
+)
+
+target_link_libraries(imgui
+    PUBLIC
+        ${GLFW_TARGET}
+        glad
+)
+
+#------------------------
+# GLM
+#------------------------
+
+set(GLM_DIR "${INCLUDE_DIR}/glm")
+
+if(NOT EXISTS "${GLM_DIR}")
+    message(WARNING
+        "GLM was not found at:\n"
+        "  ${GLM_DIR}\n"
+        "Make sure GLM is installed in the dependencies/include directory."
+    )
+endif()
 
 #------------------------
 # ENGINE
@@ -92,28 +131,33 @@ file(GLOB_RECURSE ENGINE_SOURCES CONFIGURE_DEPENDS
     "${ENGINE_DIR}/*.cpp"
 )
 
-add_library(nemark_engine STATIC
+add_library(nemark STATIC
     ${ENGINE_SOURCES}
 )
 
-target_include_directories(nemark_engine
+target_include_directories(nemark
     PUBLIC
+        "${SRC_DIR}"
         "${DEPENDENCIES_DIR}"
 )
 
-target_link_libraries(nemark_engine
+if(EXISTS "${GLM_DIR}")
+    target_include_directories(nemark
+        PUBLIC
+            "${INCLUDE_DIR}"
+    )
+endif()
+
+target_link_libraries(nemark
     PUBLIC
         imgui
         glad
-        glfw
-        #glm
+        ${GLFW_TARGET}
 )
 
 #------------------------
-# EXECUTABLES
+# EDITOR
 #------------------------
-
-#--Editor
 
 file(GLOB_RECURSE EDITOR_SOURCES CONFIGURE_DEPENDS
     "${EDITOR_DIR}/*.cpp"
@@ -130,10 +174,12 @@ target_include_directories(nemark_editor
 
 target_link_libraries(nemark_editor
     PRIVATE
-        nemark_engine
+        nemark
 )
 
-#--Mapper
+#------------------------
+# HINGE MAPPER
+#------------------------
 
 file(GLOB_RECURSE MAPPER_SOURCES CONFIGURE_DEPENDS
     "${MAPPER_DIR}/*.cpp"
@@ -150,10 +196,12 @@ target_include_directories(hinge_mapper
 
 target_link_libraries(hinge_mapper
     PRIVATE
-        nemark_engine
+        nemark
 )
 
-#--Sandbox
+#------------------------
+# SANDBOX
+#------------------------
 
 file(GLOB_RECURSE SANDBOX_SOURCES CONFIGURE_DEPENDS
     "${SANDBOX_DIR}/*.cpp"
@@ -170,5 +218,21 @@ target_include_directories(sandbox
 
 target_link_libraries(sandbox
     PRIVATE
-        nemark_engine
+        nemark
 )
+
+#------------------------
+# COMPILER WARNINGS
+#------------------------
+
+if(MSVC)
+    target_compile_options(nemark PRIVATE /W4)
+    target_compile_options(nemark_editor PRIVATE /W4)
+    target_compile_options(hinge_mapper PRIVATE /W4)
+    target_compile_options(sandbox PRIVATE /W4)
+else()
+    target_compile_options(nemark PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(nemark_editor PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(hinge_mapper PRIVATE -Wall -Wextra -Wpedantic)
+    target_compile_options(sandbox PRIVATE -Wall -Wextra -Wpedantic)
+endif()

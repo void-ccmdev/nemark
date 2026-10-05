@@ -3,9 +3,9 @@
 #include "nemark_engine/nemark_engine.h"
 
 namespace NEditor
-{   
+{
     class NEUI
-    { public:  
+    { public:
         enum EditorThemes
         {
             DARK,
