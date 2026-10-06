@@ -7,6 +7,7 @@
 #include "core/input.h"
 #include "ui/ui.h"
 #include "global/global.h"
+#include "filesystem/filesystem.h"
 
 namespace Nemark
 {
@@ -65,5 +66,18 @@ namespace Nemark
             void RemoveVariable(std::string name);
         private:
             Global m_global;
+    };
+
+    class FileServer {
+        public:
+            File createFile(std::string& name, std::string& path);
+
+            void writeFile(File file, std::string& content);
+            void appendToFile(File file, std::string& content);
+            std::string readFile(File file);
+            void removeFile(File file);
+
+        private:
+            FileSystem m_fs;
     };
 } // namespace Engine

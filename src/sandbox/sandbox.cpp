@@ -6,6 +6,8 @@ Nemark::InputServer inputServer;
 Nemark::UIServer uiServer;
 Nemark::UI ui = uiServer.getUI();
 
+inline Nemark::FileServer fs;
+
 bool show = true;
 bool smth = false;
 float val = 0.1f;
@@ -56,6 +58,12 @@ int main()
     uiServer.setTheme(Nemark::UI_STYLE_COLORS::CLASSIC);
     
     //Math::Vector3f vector = Math::Vector3f(); --Does not work yet :(
+
+    Nemark::File log;
+    log.name = "log.txt";
+    log.path = "folder/";
+
+    fs.removeFile(log);
 
     while (!windowServer.shouldWindowClose(windowServer.getCurrentWindow()))
     {   

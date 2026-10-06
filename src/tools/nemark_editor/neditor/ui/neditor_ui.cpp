@@ -19,8 +19,6 @@ void NEUI::setTheme(EditorThemes theme)
     else {
         uiServer.setTheme(Nemark::UI_STYLE_COLORS::DARK); //Set default theme if no/non-existent theme selected.
     }
-
-    std::cout << &globalServer << std::endl;
 }
 
 void NEUI::startUI() { uiServer.startUI(); }
@@ -90,7 +88,6 @@ void HandleTopBar()
         ui.EndMainMenuBar();
     }
 }
-
 
 void HandleSceneTree()
 {

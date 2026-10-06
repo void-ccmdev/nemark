@@ -62,3 +62,13 @@ UI UIServer::getUI() { return ui; }
 void GlobalServer::SetVariable(std::string name, std::any value) { m_global.SetVariable(name, value); }
 std::any GlobalServer::GetVariable(std::string name) const { return m_global.GetVariable(name); }
 void GlobalServer::RemoveVariable(std::string name) { m_global.RemoveVariable(name); }
+
+/////////////////////////
+///////  -FILES-  ///////
+/////////////////////////
+
+File FileServer::createFile(std::string& name, std::string& path) { return m_fs.createFile(name, path); }
+void FileServer::writeFile(File file, std::string& content) { m_fs.writeFile(file, content); }
+void FileServer::appendToFile(File file, std::string& content) { m_fs.appendToFile(file, content); }
+std::string FileServer::readFile(File file) { return m_fs.readFile(file); }
+void FileServer::removeFile(File file) { m_fs.removeFile(file); }
