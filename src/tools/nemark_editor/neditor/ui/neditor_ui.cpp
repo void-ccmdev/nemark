@@ -46,6 +46,11 @@ void AboutPage()
     ui.Text("hii");
     ui.End();
 }
+bool showNewProjectWindow = false;
+void ProjectNew() {
+    ui.Begin("New Project", &showNewProjectWindow, ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse);
+    ui.End();
+}
 
 bool showSceneTreePanel = true;
 bool showInspectorPanel = true;
@@ -54,6 +59,19 @@ bool showAssetsViewerPanel = true;
 void HandleTopBar()
 {
     if (ui.BeginMainMenuBar()) {
+        if (ui.BeginMenu("Nemark")) {
+            if (ui.MenuItem("New Project")) {
+                showNewProjectWindow = true;
+            }
+            if (ui.MenuItem("Open Project")) {
+
+            }
+            ui.Separator();
+            if (ui.MenuItem("Close Editor")) {
+
+            }
+            ui.EndMenu();
+        }
 
         if(ui.BeginMenu("File")) {
             //Menu items
@@ -115,6 +133,8 @@ void HandleAssetsViewer()
     }
 }
 
+
+
 //#---Calling-UI-handlers---#
 
 void NEUI::updateUI() {
@@ -126,6 +146,7 @@ void NEUI::updateUI() {
 
     if (showAboutPage) { AboutPage(); }
     if (showEditorSettings) { EditorSettings(); }
+    if (showNewProjectWindow) { ProjectNew(); }
 
     if (currentEditorTheme == 0) { uiServer.setTheme(Nemark::UI_STYLE_COLORS::DARK); }
     else if (currentEditorTheme == 1) { uiServer.setTheme(Nemark::UI_STYLE_COLORS::LIGHT); }
