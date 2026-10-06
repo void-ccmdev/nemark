@@ -1,9 +1,13 @@
 #include "neditor_ui.h"
+#include "nemark_engine/nemark_engine.h"
+#include <iostream>
 
 using namespace NEditor;
 
 Nemark::UIServer uiServer;
 Nemark::UI ui = uiServer.getUI();
+
+inline Nemark::GlobalServer globalServer;
 
 void NEUI::initialize(){ uiServer.initialize(); }
 
@@ -15,6 +19,8 @@ void NEUI::setTheme(EditorThemes theme)
     else {
         uiServer.setTheme(Nemark::UI_STYLE_COLORS::DARK); //Set default theme if no/non-existent theme selected.
     }
+
+    std::cout << &globalServer << std::endl;
 }
 
 void NEUI::startUI() { uiServer.startUI(); }
@@ -43,6 +49,10 @@ void AboutPage()
     ui.End();
 }
 
+bool showSceneTreePanel = true;
+bool showInspectorPanel = true;
+bool showAssetsViewerPanel = true;
+
 void HandleTopBar()
 {
     if (ui.BeginMainMenuBar()) {
@@ -61,6 +71,12 @@ void HandleTopBar()
             if (ui.MenuItem("Editor Settings")) {
                 showEditorSettings = true;
             }
+            if (ui.BeginMenu("Panels")) {
+                ui.MenuItem("Scene Tree", NULL, &showSceneTreePanel, true);
+                ui.MenuItem("Inspector", NULL, &showInspectorPanel, true);
+                ui.MenuItem("Asset Viewer", NULL, &showAssetsViewerPanel, true);
+                ui.EndMenu();
+            }
             ui.EndMenu();
         }
 
@@ -75,30 +91,38 @@ void HandleTopBar()
     }
 }
 
+
 void HandleSceneTree()
 {
-    ui.Begin("Scene Tree", nullptr, ImGuiWindowFlags_NoCollapse);
+    if (showSceneTreePanel) {
+        ui.Begin("Scene Tree", nullptr, ImGuiWindowFlags_NoCollapse);
 
-    ui.End();
+        ui.End();
+    }
 }
 
 void HandleInspector()
 {
-    ui.Begin("Properties", nullptr, ImGuiWindowFlags_NoCollapse);
+    if (showInspectorPanel) {
+        ui.Begin("Properties", nullptr, ImGuiWindowFlags_NoCollapse);
 
-    ui.End();
+        ui.End();
+    }
 }
 void HandleAssetsViewer()
 {
-    ui.Begin("Assets Viewer", nullptr, ImGuiWindowFlags_NoCollapse);
+    if (showAssetsViewerPanel) {
+        ui.Begin("Assets Viewer", nullptr, ImGuiWindowFlags_NoCollapse);
 
-    ui.End();
+        ui.End();
+    }
 }
 
 //#---Calling-UI-handlers---#
 
 void NEUI::updateUI() {
     HandleTopBar();
+
     HandleInspector();
     HandleSceneTree();
     HandleAssetsViewer();
