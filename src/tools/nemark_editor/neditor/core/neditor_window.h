@@ -12,6 +12,9 @@ namespace NEditor
         void close();
 
         bool shouldClose();
+        void setShouldClose(bool value);
+
+        Nemark::Window getNemarkWindow();
 
         Nemark::WindowServer windowServer;
     };

@@ -72,3 +72,5 @@ void FileServer::writeFile(File file, std::string& content) { m_fs.writeFile(fil
 void FileServer::appendToFile(File file, std::string& content) { m_fs.appendToFile(file, content); }
 std::string FileServer::readFile(File file) { return m_fs.readFile(file); }
 void FileServer::removeFile(File file) { m_fs.removeFile(file); }
+void FileServer::createFolder(std::string& name, std::string& path) { m_fs.createFolder(name, path); }
+void FileServer::removeFolder(std::string& path) { m_fs.removeFolder(path); }

@@ -49,6 +49,8 @@ void AboutPage()
 bool showNewProjectWindow = false;
 void ProjectNew() {
     ui.Begin("New Project", &showNewProjectWindow, ImGuiWindowFlags_NoDocking | ImGuiWindowFlags_NoCollapse);
+    ui.Text("Name:");
+    
     ui.End();
 }
 
@@ -67,8 +69,8 @@ void HandleTopBar()
 
             }
             ui.Separator();
-            if (ui.MenuItem("Close Editor")) {
-
+            if (ui.MenuItem("Close Editor", "Ctrl + Q")) {
+                globalServer.SetVariable("EDITOR_SHOULD_CLOSE", true);
             }
             ui.EndMenu();
         }

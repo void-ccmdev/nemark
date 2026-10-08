@@ -118,3 +118,25 @@ File FileSystem::createFile(std::string& name, std::string& path)
 
     return file;
 }
+
+void FileSystem::createFolder(std::string& name, std::string& path)
+{
+    std::filesystem::path folderPath = std::filesystem::path(path) / name;
+    std::error_code err;
+    std::filesystem::create_directories(folderPath, err);
+}
+
+void FileSystem::removeFolder(std::string& path)
+{
+    std::filesystem::path folderPath = std::filesystem::path(path);
+    std::error_code err;
+    bool removed = std::filesystem::remove(path);
+
+    if(!removed) {
+        Nemark::OutputServer output;
+        output.printErr(
+            "Couldn't remove: " + folderPath.string()
+        );
+        return;
+    }
+}

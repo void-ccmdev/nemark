@@ -1,11 +1,14 @@
 #include "neditor_app.h"
 
-#include "core/neditor_window.h"
 #include "nemark_engine/nemark_engine.h"
+
+#include "core/neditor_window.h"
+#include "core/neditor_input.h"
 #include "ui/neditor_ui.h"
 
 inline Nemark::OutputServer output;
 inline Nemark::GlobalServer globalServer;
+inline Nemark::FileServer fs; //temp
 
 #if(WIN32)
     #include <windows.h>
@@ -17,28 +20,44 @@ void printLinuxANSI();
 void printWinANSI();
 
 int Application::run()
-{
+{   //--Begin
     NEWindow window;
     NEUI ui;
+    NEInput eInput;
 
     window.create(width, height, title, maximized);
     ui.initialize();
     ui.setTheme(NEUI::EditorThemes::DARK);
 
+    eInput.setShortcuts();
+
+    //--Globals
+    globalServer.SetVariable("EDITOR_SHOULD_CLOSE", false);
+
+    //--ANSI
 #if(WIN32)
     printWinANSI();
 #else
     printLinuxANSI();
 #endif
 
+    //--Editor-loop
     while(!window.shouldClose())
-    {
-        ui.startUI();
+    {   
+        eInput.processInput(window.getNemarkWindow());
 
+        ui.startUI();
         ui.updateUI();
         window.update();
         ui.endUI();
+
+        bool shouldClose = std::any_cast<bool>(globalServer.GetVariable("EDITOR_SHOULD_CLOSE"));
+        if (shouldClose) {
+            window.setShouldClose(true);
+        }
     }
+
+    //--End
 
     ui.destroyUI();
     window.close();

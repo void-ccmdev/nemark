@@ -21,3 +21,13 @@ bool NEWindow::shouldClose()
 {
     return windowServer.shouldWindowClose(windowServer.getCurrentWindow());
 }
+
+void NEWindow::setShouldClose(bool value)
+{
+    windowServer.setWindowShouldClose(windowServer.getCurrentWindow(), value);
+}
+
+Nemark::Window NEWindow::getNemarkWindow()
+{
+    return windowServer.getCurrentWindow();
+}
