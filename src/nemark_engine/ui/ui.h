@@ -115,7 +115,7 @@ namespace Nemark {
             bool Button(const char* label, const ImVec2& size = ImVec2(0, 0)) { return ImGui::Button(label, size); }
             bool SmallButton(const char* label) { return ImGui::SmallButton(label); }
             bool InvisibleButton(const char* str_id, const ImVec2& size, ImGuiButtonFlags flags = 0) { return ImGui::InvisibleButton(str_id, size, flags); }
-            bool ArrowButton(const char* str_id, ImGuiDir dir) { ImGui::ArrowButton(str_id, dir); }
+            bool ArrowButton(const char* str_id, ImGuiDir dir) { return ImGui::ArrowButton(str_id, dir); }
             bool Checkbox(const char* label, bool* v) { return ImGui::Checkbox(label, v); }
             bool CheckboxFlags(const char* label, int* flags, int flags_value) { return ImGui::CheckboxFlags(label, flags, flags_value); }
             bool CheckboxFlags(const char* label, unsigned int* flags, unsigned int flags_value) { return ImGui::CheckboxFlags(label, flags, flags_value); }
