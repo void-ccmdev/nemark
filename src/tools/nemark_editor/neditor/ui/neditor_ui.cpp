@@ -163,11 +163,12 @@ void HandleInspector()
         ui.End();
     }
 }
+float col[3];
 void HandleAssetsViewer()
 {
     if (showAssetsViewerPanel) {
         ui.Begin("Assets Viewer", nullptr, ImGuiWindowFlags_NoCollapse);
-
+        
         ui.End();
     }
 }

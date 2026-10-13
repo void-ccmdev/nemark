@@ -186,11 +186,18 @@ namespace Nemark {
             bool InputScalarN(const char* label, ImGuiDataType data_type, void* p_data, int components, const void* p_step = NULL, const void* p_step_fast = NULL, const char* format = NULL, ImGuiInputTextFlags flags = 0) { return ImGui::InputScalarN(label, data_type, p_data, components, p_step, p_step_fast, format, flags); }
         
             // Widgets: Color Editor/Picker
-
+            bool ColorEdit3(const char* label, float col[3], ImGuiColorEditFlags flags = 0) { return ImGui::ColorEdit3(label, col, flags); }                                          
+            bool ColorEdit4(const char* label, float col[4], ImGuiColorEditFlags flags = 0) { return ImGui::ColorEdit4(label, col, flags); }                                          
+            bool ColorPicker3(const char* label, float col[3], ImGuiColorEditFlags flags = 0) { return ImGui::ColorPicker3(label, col, flags); }                                      
+            bool ColorPicker4(const char* label, float col[4], ImGuiColorEditFlags flags = 0, const float* ref_col = NULL) { return ImGui::ColorPicker4(label, col, flags, ref_col); }
+            bool ColorButton(const char* desc_id, const ImVec4& col, ImGuiColorEditFlags flags = 0, const ImVec2& size = ImVec2(0, 0));                                               
+            void SetColorEditOptions(ImGuiColorEditFlags flags) { ImGui::SetColorEditOptions(flags); }
+            
             // Widgets: Trees
 
-            // Widgets: Selectables
-
+            // Widgets: Selectables                                                                                                                                                                 
+            bool Selectable(const char* label, bool selected = false, ImGuiSelectableFlags flags = 0, const ImVec2& size = ImVec2(0, 0)) { return ImGui::Selectable(label, selected, flags, size); }
+            bool Selectable(const char* label, bool* p_selected, ImGuiSelectableFlags flags = 0, const ImVec2& size = ImVec2(0, 0)) { return ImGui::Selectable(label, p_selected, flags, size); }
             // Widgets: List Boxes
 
             // Widgets: Data Plotting
@@ -204,6 +211,8 @@ namespace Nemark {
             void EndMenu() { ImGui::EndMenu(); }                                    
             bool MenuItem(const char* label, const char* shortcut = NULL, bool selected = false, bool enabled = true) { return ImGui::MenuItem(label, shortcut, selected, enabled); }
             bool MenuItem(const char* label, const char* shortcut, bool* p_selected, bool enabled = true) { return ImGui::MenuItem(label, shortcut, p_selected, enabled); }           
+
+            // Widgets: Tooltips
         private:
             float m_mainScale = 1.0f;
             ImGuiIO* m_io = nullptr;
