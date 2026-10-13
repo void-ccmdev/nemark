@@ -5,6 +5,7 @@
 #include "core/neditor_window.h"
 #include "core/neditor_input.h"
 #include "ui/neditor_ui.h"
+#include "project_manager/project_manager.h"
 
 inline Nemark::OutputServer output;
 inline Nemark::GlobalServer globalServer;
@@ -33,6 +34,7 @@ int Application::run()
 
     //--Globals
     globalServer.SetVariable("EDITOR_SHOULD_CLOSE", false);
+    globalServer.SetVariable("EDITOR_CURRENT_PROJECT", (std::string)"");
 
     //--ANSI
 #if(WIN32)
@@ -40,7 +42,6 @@ int Application::run()
 #else
     printLinuxANSI();
 #endif
-
     //--Editor-loop
     while(!window.shouldClose())
     {   
