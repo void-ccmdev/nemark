@@ -172,7 +172,20 @@ void HandleAssetsViewer()
     }
 }
 
+bool showErrPopUp = false;
+void ErrPopUp()
+{
+    ui.Begin("Editor Error!", &showErrPopUp, ImGuiWindowFlags_NoDocking);
 
+    std::string error = std::any_cast<std::string>(globalServer.GetVariable("EDITOR_ERR_POPUP_VALUE"));
+    ui.TextColored(ImVec4(1.0f, 0.0f, 0.0f, 1.0f), error.c_str());
+    if (ui.Button("OK")) {
+        globalServer.SetVariable("EDITOR_ERR_POPUP_VALUE", std::string(""));
+        globalServer.SetVariable("EDITOR_SHOW_ERR_POPUP", false);
+    }
+
+    ui.End();
+}
 
 //#---Calling-UI-handlers---#
 
@@ -192,4 +205,9 @@ void NEUI::updateUI() {
     else if (currentEditorTheme == 1) { uiServer.setTheme(Nemark::UI_STYLE_COLORS::LIGHT); }
     else if (currentEditorTheme == 2) { uiServer.setTheme(Nemark::UI_STYLE_COLORS::CLASSIC); }
     else { Nemark::OutputServer output; output.printErr("Unknown theme!"); }
+
+    if (showErrPopUp) { ErrPopUp(); }
+
+    if (std::any_cast<bool>(globalServer.GetVariable("EDITOR_SHOW_ERR_POPUP"))) { showErrPopUp = true; }
+    else { showErrPopUp = false; }
 }

@@ -23,7 +23,23 @@ void ProjectManager::NewProject(std::string& name, std::string& path)
     gs.SetVariable("EDITOR_CURRENT_PROJECT", projectPath.string());
 }
 void ProjectManager::OpenProject(std::string& path)
-{
+{   
+    std::error_code ec;
+    const std::filesystem::path dir(path);
+
+    if (!std::filesystem::is_directory(dir, ec)) {
+        if (ec) {
+            outs.printErr("Couldn't check path: " + ec.message());
+            gs.SetVariable("EDITOR_ERR_POPUP_VALUE", std::string("Couldn't check path: " + ec.message()));
+            gs.SetVariable("EDITOR_SHOW_ERR_POPUP", true);
+        } else {
+            outs.printErr("Path is not a directory " + path);
+            gs.SetVariable("EDITOR_ERR_POPUP_VALUE", std::string("Path is not a directory " + path));
+            gs.SetVariable("EDITOR_SHOW_ERR_POPUP", true);
+        }
+        return;
+    } 
+    
     for (const auto& file : std::filesystem::directory_iterator(path))
     {
         if (file.is_regular_file() && file.path().extension() == ".neproj") {
@@ -32,6 +48,8 @@ void ProjectManager::OpenProject(std::string& path)
             outs.println("Project path set! Path contains '.neproj'!");
             return;
         }
-        outs.printErr("Couldn't locate '.neproj' file inside of given path!");
+        outs.printErr("Couldn't locate '.neproj' file inside the given path!");
+        gs.SetVariable("EDITOR_ERR_POPUP_VALUE", std::string("Couldn't locate '.neproj' file inside the given path!"));
+        gs.SetVariable("EDITOR_SHOW_ERR_POPUP", true);
     }
 }

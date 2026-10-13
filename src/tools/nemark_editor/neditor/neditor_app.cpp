@@ -35,6 +35,8 @@ int Application::run()
     //--Globals
     globalServer.SetVariable("EDITOR_SHOULD_CLOSE", false);
     globalServer.SetVariable("EDITOR_CURRENT_PROJECT", (std::string)"");
+    globalServer.SetVariable("EDITOR_SHOW_ERR_POPUP", false);
+    globalServer.SetVariable("EDITOR_ERR_POPUP_VALUE", std::string(""));
 
     //--ANSI
 #if(WIN32)
