@@ -104,12 +104,12 @@ namespace Nemark {
 
             //Widgets: Text
             void TextUnformatted(const char* text, const char* text_end = NULL) { ImGui::TextUnformatted(text, text_end); }
-            void Text(const char* text) { ImGui::Text(text); }
-            void TextColored(const ImVec4& color, const char* text) { ImGui::TextColored(color, text); }
-            void TextDisabled(const char* text) { ImGui::TextDisabled(text); }
-            void TextWrapped(const char* text) { ImGui::TextWrapped(text); }
-            void LabelText(const char* label, const char* text) { ImGui::LabelText(label, text); }
-            void BulletText(const char* text) { ImGui::BulletText(text); }
+            void Text(const char* text) { ImGui::Text("%s", text); }
+            void TextColored(const ImVec4& color, const char* text) { ImGui::TextColored(color, "%s", text); }
+            void TextDisabled(const char* text) { ImGui::TextDisabled("%s", text); }
+            void TextWrapped(const char* text) { ImGui::TextWrapped("%s", text); }
+            void LabelText(const char* label, const char* text) { ImGui::LabelText(label, "%s", text); }
+            void BulletText(const char* text) { ImGui::BulletText("%s", text); }
             void SeparatorText(const char* label) { ImGui::SeparatorText(label); }
 
             //Widgets: Main
@@ -151,7 +151,7 @@ namespace Nemark {
             bool DragInt4(const char* label, int v[4], float v_speed = 1.0f, int v_min = 0, int v_max = 0, const char* format = "%d", ImGuiSliderFlags flags = 0) { return ImGui::DragInt(label, v, v_speed, v_min, v_max, format, flags); }
             bool DragIntRange2(const char* label, int* v_current_min, int* v_current_max, float v_speed = 1.0f, int v_min = 0, int v_max = 0, const char* format = "%d", const char* format_max = NULL, ImGuiSliderFlags flags = 0) { return ImGui::DragIntRange2(label, v_current_min, v_current_max, v_speed, v_min, v_max, format, format_max, flags); }
             bool DragScalar(const char* label, ImGuiDataType data_type, void* p_data, float v_speed = 1.0f, const void* p_min = NULL, const void* p_max = NULL, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::DragScalar(label, data_type, p_data, v_speed, p_min, p_max, format, flags); }
-            bool DragScalarN(const char* label, ImGuiDataType data_type, void* p_data, int components, float v_speed = 1.0f, const void* p_min = NULL, const void* p_max = NULL, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::DragScalar(label, data_type, p_data, v_speed, p_min, p_max, format, flags); }
+            bool DragScalarN(const char* label, ImGuiDataType data_type, void* p_data, int components, float v_speed = 1.0f, const void* p_min = NULL, const void* p_max = NULL, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::DragScalarN(label, data_type, p_data, components, v_speed, p_min, p_max, format, flags); }
 
             // Widgets: Regular Sliders
             bool SliderFloat(const char* label, float* v, float v_min, float v_max, const char* format = "%.3f", ImGuiSliderFlags flags = 0) { return ImGui::SliderFloat(label, v, v_min, v_max, format, flags); }
@@ -170,7 +170,7 @@ namespace Nemark {
             bool VSliderScalar(const char* label, const ImVec2& size, ImGuiDataType data_type, void* p_data, const void* p_min, const void* p_max, const char* format = NULL, ImGuiSliderFlags flags = 0) { return ImGui::VSliderScalar(label, size, data_type, p_data, p_min, p_max, format, flags); }
 
             // Widgets: Input with Keyboard
-            bool InputText(const char* label, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL) { return ImGui::InputText(label, buf, buf_size, flags); }
+            bool InputText(const char* label, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL) { return ImGui::InputText(label, buf, buf_size, flags, callback, user_data); }
             bool InputTextMultiline(const char* label, char* buf, size_t buf_size, const ImVec2& size = ImVec2(0, 0), ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL) { return ImGui::InputTextMultiline(label, buf, buf_size, size, flags, callback, user_data); }
             bool InputTextWithHint(const char* label, const char* hint, char* buf, size_t buf_size, ImGuiInputTextFlags flags = 0, ImGuiInputTextCallback callback = NULL, void* user_data = NULL) { return ImGui::InputTextWithHint(label, hint, buf, buf_size, flags, callback, user_data); }
             bool InputFloat(const char* label, float* v, float step = 0.0f, float step_fast = 0.0f, const char* format = "%.3f", ImGuiInputTextFlags flags = 0) { return ImGui::InputFloat(label, v, step, step_fast, format, flags); }

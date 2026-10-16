@@ -13,7 +13,7 @@ using namespace Nemark;
 //  FileSystem
 //----------------
 
-void FileSystem::writeFile(File file, std::string& content)
+void FileSystem::writeFile(File file, std::string content)
 {
     std::filesystem::path directory = file.path;
     std::filesystem::path filePath = directory / file.name;
@@ -40,7 +40,7 @@ void FileSystem::writeFile(File file, std::string& content)
     newFile << content;
 }
 
-void FileSystem::appendToFile(File file, std::string& content)
+void FileSystem::appendToFile(File file, std::string content)
 {
     std::filesystem::path directory = file.path;
     std::filesystem::path filePath = directory / file.name;
@@ -110,7 +110,7 @@ void FileSystem::removeFile(File file)
     }
 }
 
-File FileSystem::createFile(std::string& name, std::string& path)
+File FileSystem::createFile(std::string name, std::string path)
 {
     File file;
     file.name = name;
@@ -119,14 +119,14 @@ File FileSystem::createFile(std::string& name, std::string& path)
     return file;
 }
 
-void FileSystem::createFolder(std::string& name, std::string& path)
+void FileSystem::createFolder(std::string name, std::string path)
 {
     std::filesystem::path folderPath = std::filesystem::path(path) / name;
     std::error_code err;
     std::filesystem::create_directories(folderPath, err);
 }
 
-void FileSystem::removeFolder(std::string& path)
+void FileSystem::removeFolder(std::string path)
 {
     std::filesystem::path folderPath = std::filesystem::path(path);
     std::error_code err;

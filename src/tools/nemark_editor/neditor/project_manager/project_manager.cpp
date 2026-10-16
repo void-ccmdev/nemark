@@ -10,6 +10,8 @@ inline Nemark::OutputServer outs;
 
 using namespace NEditor;
 
+const std::string PROJECT_FILE_EXTENSION = ".neproj";
+
 void ProjectManager::NewProject(std::string& name, std::string& path)
 {
     fs.createFolder(name, path);
@@ -17,7 +19,7 @@ void ProjectManager::NewProject(std::string& name, std::string& path)
 
     std::cout << projectPath.string() << std::endl;
 
-    Nemark::File projectFile = fs.createFile(name + std::string(".neproj"), projectPath.string());
+    Nemark::File projectFile = fs.createFile(name + PROJECT_FILE_EXTENSION, projectPath.string());
     fs.writeFile(projectFile, std::string("Nemark SDK project"));
 
     gs.SetVariable("EDITOR_CURRENT_PROJECT", projectPath.string());
