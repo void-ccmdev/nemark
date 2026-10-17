@@ -23,7 +23,7 @@
     - [Nix package manager (RECOMMENDED) ](#nix-package-manager)
     - [Manually (Requires you to install dependencies manually) ](#manual-path)
 
-    > [!Important]
+    >[!Important]
     > Nix package manager doesn't work on Windows!
     > If you are using windows, use the [manual path](#manual-path) or use the [Windows subsystem for Linux](https://learn.microsoft.com/en-us/windows/wsl/).
  
