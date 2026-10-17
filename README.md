@@ -30,8 +30,11 @@
 
  - ### Nix Package manager
 To get started, you need to have ```nix``` and ```git``` on you computer.
+
 Nix will handle all the dependencies of Nemark SDK source code, as it is a package manager.
+
 To intstall Nix, follow the simple steps on [THE NIX DOWNLOAD PAGE](https://nixos.org/download#download-nix) for your desired usecase.
+
 After installing Nix, you need to enable experimental features ```nix-command``` and ```flakes```by going into ```etc/nix/nix.conf``` and adding ```experimental-features = nix-command flakes```to the configuration file OR if you are using [NixOS](https://nixos.org/), add ```nix.settingsexperimental-features = [ "nix-command" "flakes" ];``` to your ```/etc/nixos/configuration.nix```
 Adding to ```/etc/nix/nix.conf``` :
 ```bash
